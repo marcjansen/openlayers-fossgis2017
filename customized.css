@@ -185,3 +185,24 @@ span.nope {
   box-shadow: none;
   padding: 0.5em 1em;
 }
+
+.hype {
+  animation: roll 5s infinite, super-rainbow 4s infinite;
+}
+
+@keyframes roll {
+  0% {
+    transform: rotate(0) rotateY(0);
+  }
+  100% {
+    transform: rotate(360deg) rotateY(-360deg);
+  }
+}
+@keyframes super-rainbow {
+  0%   { color: red; }
+  20%  { color: orange; }
+  40%  { color: green; }
+  60%  { color: blue ; }
+  80%  { color: indigo; }
+  100% { color: violet; }
+}
