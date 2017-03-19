@@ -19,7 +19,7 @@
     <!-- Printing and PDF exports -->
     <script>
 (function() {
-  var printCssDir = './lib/reveal.js-3.4.1/plugin/css/print';
+  var printCssDir = './lib/reveal.js-3.4.1/css/print';
   var link = document.createElement( 'link' );
   link.rel = 'stylesheet';
   link.type = 'text/css';
@@ -32,8 +32,14 @@
     <!--[if lt IE 9]>
     <script src="./lib/reveal.js-3.4.1/lib/js/html5shiv.js"></script>
     <![endif]-->
+    <script>
+function preloadLargeGif() {
+  var i = new Image();
+  i.src = 'img/examples-screenies/all-examples.gif';
+}
+    </script>
   </head>
-  <body>
+  <body onload="preloadLargeGif();">
     <div class="reveal">
       <div class="slides">
         <section id="start"
@@ -181,15 +187,30 @@
           </ul>
         </section>
 
+        <section
+          data-background-image="img/examples-screenies/all-examples.gif"
+          data-background-size="contain">
+          <p>&nbsp;</p>
+        </section>
+
         <section>
           <h2>OpenLayers</h2>
           <ul>
-            <li>…lange Historie<ul>
-              <li>v2.0.0, August 2006</li>
-              <li>v3.0.0, August 2014</li>
-              <li>v4.0.0, Februar 2016</li>
-            </ul></li>
-            <li>viele Daten- &amp; Layerquellen</li>
+            <li>…lange Historie
+              <ul>
+                <li>v1.0.0, Mai 2006</li>
+                <li>v2.0.0, August 2006</li>
+                <li>v3.0.0, August 2014</li>
+                <li>v4.0.0, Februar 2017</li>
+              </ul>
+            </li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>OpenLayers</h2>
+          <ul>
+            <li>Viele Daten- &amp; Layerquellen</li>
             <li>Interaktionen &amp; Steuerelemente</li>
             <li>Aktiv entwickelt &amp; große Community</li>
             <li>Gut dokumentiert &amp; viele Beispiele</li>
@@ -203,6 +224,18 @@
 
         <section>
           <h1 class="hype">v4.0.1</h1>
+        </section>
+
+        <section>
+          <h2>Was bedeutet die 4?</h2>
+          <ul>
+            <li><strong>Kein</strong> kompletter rewrite</li>
+            <li>Keine <strong>massiven</strong> API-Brüche</li>
+            <li>Ab jetzt: <a href="http://semver.org/lang/de/">Semantic versioning</a></li>
+            <li>Beta: https://www.npmjs.com/package/ol/</li>
+            <li>ES2015 <span style="text-decoration: line-through;">ES6</span> modules</li>
+            <li>(mehr: https://github.com/openlayers/openlayers/pull/6302)</li>
+          </ul>
         </section>
 
         <section>
@@ -266,6 +299,7 @@
     <script>
 (function() {
   var revealDir = './lib/reveal.js-3.4.1';
+  var pluginDir = revealDir + '/plugin';
   // More info https://github.com/hakimel/reveal.js#configuration
   Reveal.initialize({
     controls: true,
@@ -284,30 +318,30 @@
         }
       },
       {
-        src: revealDir + '/plugin/markdown/marked.js',
+        src: pluginDir + '/markdown/marked.js',
         condition: function() {
           return !!document.querySelector( '[data-markdown]' );
         }
       },
       {
-        src: revealDir + '/plugin/markdown/markdown.js',
+        src: pluginDir + '/markdown/markdown.js',
         condition: function() {
           return !!document.querySelector( '[data-markdown]' );
         }
       },
       {
-        src: 'plugin/zoom-js/zoom.js',
+        src: pluginDir + '/zoom-js/zoom.js',
         async: true
       },
       {
-        src: revealDir + '/plugin/highlight/highlight.js',
+        src: pluginDir + '/highlight/highlight.js',
         async: true,
         callback: function() {
           hljs.initHighlightingOnLoad();
         }
       },
       {
-        src: revealDir + '/plugin/notes/notes.js',
+        src: pluginDir + '/notes/notes.js',
         async: true
       }
     ]
