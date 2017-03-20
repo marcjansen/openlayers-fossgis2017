@@ -212,3 +212,23 @@ span.nope {
 .reveal section .detail {
   font-size: 0.7em;
 }
+
+.reveal section h1 code,
+.reveal section h2 code,
+.reveal section h3 code,
+.reveal section h4 code,
+.reveal section h5 code,
+.reveal section h6 code  {
+  font-family: "Inconsolata", monospace;
+  font-weight: bold;
+}
+.reveal section li code,
+.reveal section p code {
+    font-family: "Inconsolata", monospace;
+    font-weight: bold;
+    color: #333;
+    margin: inherit 0.2em;
+}
+
+.reveal section pre code {
+    font-weight: normal;
