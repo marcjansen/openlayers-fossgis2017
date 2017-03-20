@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Extent Interaction</title>
+    <link rel="stylesheet" href="ol.css" type="text/css">
+    <!-- The line below is only needed for old environments like Internet Explorer and Android 4.x -->
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+    <script src="ol-debug.js"></script>
+    <style>
+      #map {
+        position: absolute;
+        width: 100%;
+        top: 0;
+        bottom: 0;
+        height: 100%;
+        left: 0;
+        right: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map" class="map"></div>
+    <script>
+      var vectorSource = new ol.source.Vector({
+        url: './countries.geojson',
+        format: new ol.format.GeoJSON(),
+        useSpatialIndex: true
+      });
+      var vector = new ol.layer.Vector({
+        source: vectorSource
+      });
+
+      var map = new ol.Map({
+        layers: [
+          new ol.layer.Tile({
+            source: new ol.source.OSM()
+          }),
+          vector
+        ],
+        target: 'map',
+        view: new ol.View({
+          center: [0, 0],
+          zoom: 3
+        })
+      });
+
+      var inExtentStyle = new ol.style.Style({
+        fill: new ol.style.Fill({
+          color: 'rgba(255,153,0, 0.5)'
+        }),
+        stroke: new ol.style.Stroke({
+          color: 'rgb(255,153,0)',
+          width: 1.25
+        })
+      })
+
+      var extentInteraction = new ol.interaction.Extent({
+        condition: ol.events.condition.platformModifierKeyOnly
+      });
+      map.addInteraction(extentInteraction);
+      extentInteraction.setActive(false);
+
+      extentInteraction.on('extentchanged', function(event) {
+        var extent = extentInteraction.getExtent();
+        if (!extent) {
+          return;
+        }
+        var features = vectorSource.getFeatures();
+        for (var i = 0; i < features.length; i++) {
+          var feature = features[i];
+          var featExtent = feature.getGeometry().getExtent();
+          // console.log(featExtent, extent);
+          if (ol.extent.intersects(featExtent, extent)) {
+            // console.log(feature);
+            feature.setStyle(inExtentStyle);
+          } else {
+            feature.setStyle(undefined);
+            // console.log('Nope: ', feature.getGeometry().getExtent(), extent);
+          }
+        }
+        //
+        // var featsInExtent = vectorSource.getFeaturesInExtent(extent);
+        // console.log(featsInExtent);
+        // for (i = 0; i < featsInExtent.length; i++) {
+        //   console.log('in');
+        //   var featInExtent = featsInExtent[i];
+        //   featInExtent.setStyle(inExtentStyle);
+        // }
+      });
+
+      //Enable interaction by holding shift
+      this.addEventListener('keydown', function(event) {
+        if (event.keyCode == 16) {
+          extentInteraction.setActive(true);
+        }
+      });
+      this.addEventListener('keyup', function(event) {
+        if (event.keyCode == 16) {
+          extentInteraction.setActive(false);
+        }
+      });
+    </script>
+  </body>
+</html>

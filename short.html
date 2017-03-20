@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>OpenLayers — Kurzvorstellung</title>
+
+    <meta name="description" content="Vortrag 'OpenLayers - Stand, Neues und Zukünftiges' auf der FOSSGIS 2017 in Passau">
+    <meta name="author" content="Marc Jansen">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <link rel="stylesheet" href="./lib/reveal.js-3.4.1/css/reveal.css" />
+    <link rel="stylesheet" href="./lib/reveal.js-3.4.1/css/theme/beige.css" id="theme" />
+    <link rel="stylesheet" href="./customized.css">
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="./lib/reveal.js-3.4.1/lib/css/zenburn.css" />
+    <!-- Printing and PDF exports -->
+    <script>
+(function() {
+  var printCssDir = './lib/reveal.js-3.4.1/css/print';
+  var link = document.createElement( 'link' );
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  link.href = window.location.search.match( /print-pdf/gi ) ?
+    printCssDir + '/pdf.css' :
+    printCssDir + '/paper.css';
+  document.getElementsByTagName( 'head' )[0].appendChild( link );
+}());
+    </script>
+    <!--[if lt IE 9]>
+    <script src="./lib/reveal.js-3.4.1/lib/js/html5shiv.js"></script>
+    <![endif]-->
+    <script>
+function preloadLargeGif() {
+  (new Image()).src = 'img/examples-screenies/all-examples.gif';
+}
+    </script>
+  </head>
+  <body onload="preloadLargeGif();">
+    <div class="reveal">
+
+      <div class="slides">
+
+        <section id="start"
+          data-background-image="img/ol-logo.svg"
+          data-background-size="auto 90%">
+          <p>&nbsp;</p>
+        </section>
+
+        <section>
+          <h2>OpenLayers</h2>
+          <img src="img/ol-logo.svg" class="plain" alt="OpenLayers logo" width="160" />
+          <h3>Kurzvorstellung</h3>
+          <p>
+           <br />
+            <a href="https://github.com/marcjansen">Marc Jansen</a> / <a href="http://twitter.com/selectoid">@selectoid</a>
+          </p>
+          <br />
+          <p>22. März 2017, FOSSGIS 2017, Passau</p>
+        </section>
+
+        <section id="author-marc-jansen">
+          <h2>Marc Jansen</h2>
+          <div class="split-info">
+            <div class="part" style="width:35%">
+              <img src="img/mj.jpg" class="plain" width="200"/><br />
+              <small>
+                <a class="email" href="mailto:jansen@terrestris.de">jansen@terrestris.de</a><br />
+                <a class="github" href="https://github.com/marcjansen/">@marcjansen</a><br />
+                <a class="twitter" href="https://twitter.com/selectoid/">@selectoid</a><br />
+              </small><br />
+              <img src="img/openlayers_de_1ed.png" class="plain" width=100 />
+            </div>
+            <div class="part" style="width:60%">
+              <div class="enumeration">
+                <ul>
+                  <li>Seit 2007 bei terrestris</li>
+                  <li>Kernentwickler und PSC Mitglied GeoExt</li>
+                  <li>Kernentwickler OpenLayers</li>
+                  <li>Buchautor "OpenLayers"</li>
+                  <li>Sprecher &amp; Trainer <br /> national &amp; international</li>
+                  <li>OSGeo Foundation Charter Member</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div style="clear:both"></div>
+        </section>
+
+        <section id="about-company-terrestris">
+          <h2>terrestris</h2>
+          <div class="split-info">
+            <div class="part" style="width:35%">
+              <img src="img/terrestris-logo.png" class="plain" width="200"/>
+              <br /><br />
+              <a class="github" href="https://github.com/terrestris/">@terrestris</a><br />
+              <a class="twitter" href="https://twitter.com/terrestrisde/">@terrestrisde</a>
+            </div>
+            <div class="part" style="width:60%">
+              <div class="enumeration">
+                <ul>
+                  <li><a href="http://terrestris.de/">terrestris.de</a></li>
+                  <li>OpenSource GIS aus Bonn</li>
+                  <li>Entwicklung, Projekte &amp; Support/Schulung</li>
+                  <li>Beratung, Planung, Implementierung &amp; Wartung</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div style="clear:both"></div>
+        </section>
+
+        <section>
+          <h2>Was ist OpenLayers?</h2>
+          <blockquote>
+            A high-performance, feature-packed library for all your mapping
+            needs.
+            <footer>&mdash; <cite><a href="http://openlayers.org/">openlayers.org, 10. März 2017</a></cite></footer>
+          </blockquote>
+          <ul class="fragment">
+            <li>OpenSource (BSD)</li>
+            <li>JavaScript</li>
+            <li>OSGeo Projekt</li>
+          </ul>
+        </section>
+
+        <section
+          data-background-image="img/examples-screenies/all-examples.gif"
+          data-background-size="contain">
+          <p>&nbsp;</p>
+        </section>
+
+        <section>
+          <h2>OpenLayers</h2>
+          <ul>
+            <li>…lange Historie
+              <ul>
+                <li>v1.0.0, Mai 2006</li>
+                <li>v2.0.0, August 2006</li>
+                <li>v3.0.0, August 2014</li>
+                <li>v4.0.0, Februar 2017</li>
+              </ul>
+            </li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>OpenLayers</h2>
+          <ul>
+            <li>Viele Daten- &amp; Layerquellen</li>
+            <li>Interaktionen &amp; Steuerelemente</li>
+            <li>Aktiv entwickelt &amp; große Community</li>
+            <li>Gut dokumentiert &amp; viele Beispiele</li>
+            <li>Universal einsetzbar</li>
+          </ul>
+        </section>
+
+
+        <section>
+          <h2>Beispielcode</h2>
+          <pre><code data-trim>
+var map = new ol.Map({
+  layers: [
+    new ol.layer.Tile({
+      source: new ol.source.OSM()
+    })
+  ],
+  target: 'map',
+  view: new ol.View({
+    center: ol.proj.fromLonLat([13.4319466, 48.5667364]),
+    zoom: 11
+  })
+});
+          </code></pre>
+        </section>
+
+        <section>
+          <iframe class="stretch" src="examples/simple.html" width="100%"></iframe>
+        </section>
+
+        <section id="thanks-questions">
+          <h4>Vielen Dank</h4>
+          <hr />
+          <h1 style="font-size:3.0em">Fragen &amp; Anmerkungen?</h1>
+          <hr />
+          <p class="subtle">
+            <a href="#/imprint">Impressum</a>
+          </p>
+        </section>
+
+        <section id="imprint">
+          <h2>Impressum</h2>
+          <h4>Autoren</h4>
+          <div style="width: 45%; float: left;">
+            <address style="text-align: left">
+              <strong>Marc Jansen</strong><br />
+              <span style="font-size: smaller;">
+                terrestris GmbH &amp; Co. KG<br />
+                Kölnstr. 99, 53111 Bonn<br />
+                Germany<br />
+                jansen@terrestris.de
+              </span>
+            </address>
+          </div>
+          <div style="width: 45%; float: right;">
+          </div>
+          <h4 style="clear:both;">Lizenz</h4>
+          <p id="license">
+            Dieser Vortrag ist unter <a
+            href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
+            lizensiert.
+          </p>
+          <p>
+            <!-- TODO change to https://cdn.rawgit.com/marcjansen/openlayers-fossgis2017/GIT-HASH/ -->
+            <a href="https://rawgit.com/marcjansen/openlayers-fossgis2017/master/short.html">Slides</a>,
+            <a href="https://rawgit.com/marcjansen/openlayers-fossgis2017/master/short-slides.pdf">PDF</a>,
+            <a href="https://github.com/marcjansen/openlayers-fossgis2017">git repository</a>
+          </p>
+        </section>
+
+      </div>
+    </div>
+    <script src="./lib/reveal.js-3.4.1/lib/js/head.min.js"></script>
+    <script src="./lib/reveal.js-3.4.1/js/reveal.js"></script>
+    <script>
+(function() {
+  var revealDir = './lib/reveal.js-3.4.1';
+  var pluginDir = revealDir + '/plugin';
+  // More info https://github.com/hakimel/reveal.js#configuration
+  Reveal.initialize({
+    controls: true,
+    progress: true,
+    history: true,
+    center: true,
+
+    transition: 'zoom', // none/fade/slide/convex/concave/zoom
+
+    // More info https://github.com/hakimel/reveal.js#dependencies
+    dependencies: [
+      {
+        src: revealDir + '/lib/js/classList.js',
+        condition: function() {
+          return !document.body.classList;
+        }
+      },
+      {
+        src: pluginDir + '/markdown/marked.js',
+        condition: function() {
+          return !!document.querySelector( '[data-markdown]' );
+        }
+      },
+      {
+        src: pluginDir + '/markdown/markdown.js',
+        condition: function() {
+          return !!document.querySelector( '[data-markdown]' );
+        }
+      },
+      {
+        src: pluginDir + '/zoom-js/zoom.js',
+        async: true
+      },
+      {
+        src: pluginDir + '/highlight/highlight.js',
+        async: true,
+        callback: function() {
+          hljs.initHighlightingOnLoad();
+        }
+      },
+      {
+        src: pluginDir + '/notes/notes.js',
+        async: true
+      }
+    ]
+  });
+}());
+    </script>
+  </body>
+</html>

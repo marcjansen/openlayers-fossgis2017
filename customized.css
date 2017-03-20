@@ -190,6 +190,8 @@ span.nope {
   animation: roll 5s infinite, super-rainbow 4s infinite;
 }
 
+
+
 @keyframes roll {
   0% {
     transform: rotate(0) rotateY(0);
@@ -205,4 +207,8 @@ span.nope {
   60%  { color: blue ; }
   80%  { color: indigo; }
   100% { color: violet; }
+}
+
+.reveal section .detail {
+  font-size: 0.7em;
 }

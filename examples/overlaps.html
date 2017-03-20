@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Overlaps</title>
+    <link rel="stylesheet" href="ol.css" type="text/css">
+    <!-- The line below is only needed for old environments like Internet Explorer and Android 4.x -->
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+    <script src="ol.js"></script>
+    <style>
+      #info {
+        font-family: sans-serif;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        text-align: center;
+        padding: 0.5em 1em;
+        font-size: 2em;
+        color: rgba(255,0,0,0.7);
+        text-shadow: 0 0 5px black;
+      }
+      #map1, #map2 {
+        position: absolute;
+        width: 50%;
+        top: 0;
+        bottom: 0;
+        height: 100%;
+      }
+      #map1 {
+        left: 0;
+        right: auto;
+      }
+      #map2 {
+        left: auto;
+        right: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map1"></div>
+    <div id="map2"></div>
+
+    <div id="info">&nbsp;</div>
+
+    <script>
+    var step = Math.PI / 80;
+    var rotateMap1 = function() {
+      var view = map1.getView();
+      var rotation = view.getRotation();
+      if (rotation >= 360) {
+        rotation = 0;
+      }
+      view.setRotation(rotation + step);
+      window.requestAnimationFrame(rotateMap1);
+    };
+    var rotateMap2 = function() {
+      var view = map2.getView();
+      var rotation = view.getRotation();
+      if (rotation >= 360) {
+        rotation = 0;
+      }
+      view.setRotation(rotation + step);
+      window.requestAnimationFrame(rotateMap2);
+    };
+
+    //window.requestAnimationFrame(rotateMap1);
+    //window.requestAnimationFrame(rotateMap2);
+
+    // // var interval;
+    // var startRotate = function() {
+    //   var view1 = map1.getView();
+    //   var view2 = map2.getView();
+    //   var step = Math.PI / 360;
+    //   interval = window.setInterval(function() {
+    //     var rotation1 = view1.getRotation();
+    //     if (rotation1 >= 360) {
+    //       rotation1 = 0;
+    //     }
+    //     view1.setRotation(rotation1 + step);
+    //     var rotation2 = view2.getRotation();
+    //     if (rotation2 >= 360) {
+    //       rotation2 = 0;
+    //     }
+    //     view2.setRotation(rotation2 + step);
+    //   }, 1);
+    // }
+    // var stopRotate = function() {
+    //   if (interval) {
+    //     window.clearInterval(interval);
+    //   }
+    // };
+    //
+    //
+    // var style = function(feat) {
+    //   var red = 255;
+    //   var green = 255;
+    //   var blue = 255;
+    //   var name = feat.get('NAMELSAD10');
+    //   if (name < 'D') {
+    //     red = 120;
+    //   } else if(name < 'H') {
+    //     green = 120;
+    //   } else if(name < 'K') {
+    //     blue = 120;
+    //   } else if(name < 'N') {
+    //     red = 120;
+    //     green = 120;
+    //   } else if(name < 'Q') {
+    //     red = 120;
+    //     blue = 120;
+    //   } else if(name < 'T') {
+    //     green = 120;
+    //     blue = 120;
+    //   } else if(name < 'V') {
+    //     red = 0;
+    //     green = 120;
+    //     blue = 120;
+    //   }
+    //   var style = new ol.style.Style({
+    //     fill: new ol.style.Fill({
+    //       color: 'rgba(' + red + ', ' + green + ', ' + blue + ', 0.6)'
+    //     }),
+    //     stroke: new ol.style.Stroke({
+    //       color: '#319FD3',
+    //       width: 1
+    //     })
+    //   });
+    //   return style;
+    // };
+    var style = new ol.style.Style({
+      fill: new ol.style.Fill({
+        //color: 'rgba(' + red + ', ' + green + ', ' + blue + ', 0.6)'
+        color: 'rgba(255,255,255,0.6)'
+      }),
+      stroke: new ol.style.Stroke({
+        color: '#319FD3',
+        width: 1
+      })
+    });
+
+    var vectorLayer1 = new ol.layer.Vector({
+      source: new ol.source.Vector({
+        url: 'county.topo.json',
+        format: new ol.format.TopoJSON()
+      }),
+      style: style,
+      renderBuffer: 1,
+      updateWhileAnimating: true,
+      updateWhileInteracting: true
+    });
+    var vectorLayer2 = new ol.layer.Vector({
+      source: new ol.source.Vector({
+        url: 'county.topo.json',
+        format: new ol.format.TopoJSON(),
+        overlaps: false
+      }),
+      style: style,
+      renderBuffer: 1,
+      updateWhileAnimating: true,
+      updateWhileInteracting: true
+    });
+
+    var map1 = new ol.Map({
+      layers: [
+        vectorLayer1
+      ],
+      target: 'map1',
+      view: new ol.View({
+        center: ol.proj.fromLonLat([-100, 40]),
+        zoom: 4
+      })
+    });
+
+    var map2 = new ol.Map({
+      layers: [
+        vectorLayer2
+      ],
+      target: 'map2',
+      view: new ol.View({
+        center: ol.proj.fromLonLat([-100, 40]),
+        zoom: 4
+      })
+    });
+
+    var highlighted1 = new ol.layer.Vector({
+      source: new ol.source.Vector({
+        spatialIndex: false
+      }),
+      style: new ol.style.Style({
+        stroke: new ol.style.Stroke({
+          color: '#000',
+          width: 1
+        }),
+        fill: new ol.style.Fill({
+          color: 'rgba(255,0,0,0.7)'
+        })
+      })
+    });
+    map1.addLayer(highlighted1);
+
+    var highlighted2 = new ol.layer.Vector({
+      source: new ol.source.Vector({
+      	spatialIndex: false
+      }),
+      style: new ol.style.Style({
+        stroke: new ol.style.Stroke({
+          color: '#000',
+          width: 1
+        }),
+        fill: new ol.style.Fill({
+          color: 'rgba(255,0,0,0.7)'
+        })
+      })
+    });
+    map2.addLayer(highlighted2);
+
+    var highlight1;
+    function displayFeatureInfo1(pixel) {
+
+      var feature = map1.forEachFeatureAtPixel(pixel, function(feature) {
+        return feature;
+      });
+
+      var info = document.getElementById('info');
+      if (feature) {
+        info.innerHTML = feature.get('NAMELSAD10');
+      } else {
+        info.innerHTML = '&nbsp;';
+      }
+
+      if (feature !== highlight1) {
+        if (highlight1) {
+          highlighted1.getSource().removeFeature(highlight1);
+        }
+        if (feature) {
+          highlighted1.getSource().addFeature(feature);
+        }
+        highlight1 = feature;
+      }
+
+    };
+
+    map1.on(['pointermove', 'singleclick'], function(evt) {
+      if (evt.dragging) {
+        return;
+      }
+      displayFeatureInfo1(evt.pixel);
+    });
+
+    var highlight2;
+    function displayFeatureInfo2(pixel) {
+
+      var feature = map2.forEachFeatureAtPixel(pixel, function(feature) {
+        return feature;
+      });
+
+      var info = document.getElementById('info');
+      if (feature) {
+        info.innerHTML = feature.get('NAMELSAD10');
+      } else {
+        info.innerHTML = '&nbsp;';
+      }
+
+      if (feature !== highlight2) {
+        if (highlight2) {
+          highlighted2.getSource().removeFeature(highlight2);
+        }
+        if (feature) {
+          highlighted2.getSource().addFeature(feature);
+        }
+        highlight2 = feature;
+      }
+
+    };
+
+    map2.on(['pointermove', 'singleclick'], function(evt) {
+      if (evt.dragging) {
+        return;
+      }
+      displayFeatureInfo2(evt.pixel);
+    });
+
+    </script>
+  </body>
+</html>
